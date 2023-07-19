@@ -1,6 +1,10 @@
 name: Create Azure Resources
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'infra/**'
   workflow_dispatch:    
 
 jobs:
@@ -24,10 +28,6 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Convert to ARM
-        run: |
-          bicep build ./bicep/main.bicep 
 
       - name: deploy
         id: createResources
